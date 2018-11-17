@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="container-fluid">
+    <form method="post" action="/result" enctype="multipart/form-data">
+        <div class="row">画像ファイルを選択してください</div>
+        <div class="row">
+            <input type="file" id="img_file" name="img_file" class="col-sm-4">
+            <select name="processing" class="btn col-sm-4">
+                <option value="edge" class="col-sm-2">エッジ検出</option>
+            </select>
+            <input type="submit" value="送信" class="btn col-sm-1" style="margin-left:10px">
+        </div>
+    </form>
+</div>
+
+<div class="preview col-sm-4">
+
+<!-- 送信するファイルをプレビュー表示 -->
+<!-- 参考:https://qiita.com/kon_yu/items/f98df7ac826e7c36cc6c -->
+<script>
+$(function(){
+  //画像ファイルプレビュー表示のイベント追加 fileを選択時に発火するイベントを登録
+  $('form').on('change', 'input[type="file"]', function(e) {
+    var file = e.target.files[0],
+        reader = new FileReader(),
+        $preview = $(".preview");
+        t = this;
+
+    // 画像ファイル以外の場合は警告
+    if(file.type.indexOf("image") < 0){
+      window.alert('画像ファイルではありません')
+      return false;
+    }
+
+    // ファイル読み込みが完了した際のイベント登録
+    reader.onload = (function(file) {
+      return function(e) {
+        //既存のプレビューを削除
+        $preview.empty();
+        // .prevewの領域の中にロードした画像を表示するimageタグを追加
+        $preview.append($('<img>').attr({
+                  src: e.target.result,
+                  width: "200px",
+                  class: "preview",
+                  title: file.name
+              }));
+      };
+    })(file);
+
+    reader.readAsDataURL(file);
+  });
+});
+</script>
+
+{% endblock %}

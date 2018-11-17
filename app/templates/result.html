@@ -1,0 +1,10 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h1>{{ message }}</h1>
+        <p><img src="{{ img_b64data }}"></p>
+    
+    <form action="/" method="get">
+        <button type="submit" class="btn">戻る</button>
+    </form>
+{% endblock %}
+
