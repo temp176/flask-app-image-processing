@@ -17,6 +17,14 @@ def edge_detection(img):
     
     return img
 
+def rgb_to_gray(img):
+    img_array = np.asarray(img)
+    img_array = cv2.cvtColor(img_array,cv2.COLOR_BGR2GRAY)
+    img = Image.fromarray(img_array)
+    
+    return img
+
+
 @app.route("/")
 def index():
     
@@ -32,6 +40,8 @@ def result():
 
         if request.form["processing"] == "edge":
             img = edge_detection(img)
+        elif request.form["processing"] == "gray":
+            img = rgb_to_gray(img)
 
         buf = BytesIO()
         img.save(buf,format="png")
