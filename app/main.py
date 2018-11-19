@@ -27,7 +27,6 @@ def rgb_to_gray(img):
 
 @app.route("/")
 def index():
-    
     return render_template("index.html")
 
 
@@ -49,11 +48,14 @@ def result():
         img_b64data = "data:image/png;base64,{}".format(img_b64str) 
 
         message = '処理に成功しました'
+        
         return render_template("result.html", message = message, img_b64data = img_b64data)
+
     except Exception as e:
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
         message = '処理に失敗しました'
+        
         return render_template("result.html", message = message)
 
 if __name__ == "__main__":
